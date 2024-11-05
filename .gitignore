@@ -1,2 +1,4 @@
 workdir
 log*
+**/.ipynb_checkpoints
+**/__pycache__
