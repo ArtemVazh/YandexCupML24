@@ -1,0 +1,63 @@
+hydra:
+  run:
+    dir: ${output_dir}/${now:%Y-%m-%d}/${now:%H-%M-%S}${output_flag}
+
+    
+output_dir: './workdir'
+output_flag: ''
+
+data_path: "../data"
+file_extension: "npy"
+save_model_path: "models"
+device: "cuda"
+seed: 42
+
+model:
+  num_classes: 41616
+  emb_dim: 1024
+  num_layers: 10
+  num_heads: 16
+  dropout: 0.1
+
+train:
+  dataset_path: ${data_path}/train
+  mixed_precision: False
+  
+  gamma: 2
+  patience: 3
+  n_folds: 10
+  epochs: 50
+  learning_rate: 0.00005
+  weight_decay: 0.00001
+  label_smoothing: 0.0
+  
+  batch_size: 32
+  num_workers: 4
+  shuffle: True
+  drop_last: False
+  log_steps: 10
+  max_size: -1
+  use_test: False
+  use_val_as_test: False
+
+val:
+  dataset_path: ${data_path}/train
+  mixed_precision: False
+  batch_size: 32
+  num_workers: 4
+  shuffle: True
+  drop_last: False
+  max_size: -1
+  use_test: False
+  use_val_as_test: False
+
+test:
+  dataset_path: ${data_path}/test
+  save_test_outputs: True
+  batch_size: 512
+  num_workers: 8
+  shuffle: False
+  drop_last: False
+  max_size: -1
+  use_test: False
+  use_val_as_test: False
